@@ -1,0 +1,119 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Requirements & Scope Definition",
+      "description": "Gather stakeholder requirements and define project scope and acceptance criteria.",
+      "status_column": "done",
+      "start_date": "2026-08-24",
+      "end_date": "2026-08-27",
+      "duration_days": 4,
+      "board_position": 1,
+      "depends_on": []
+    },
+    {
+      "id": 2,
+      "title": "Database Schema Design",
+      "description": "Design the relational schema for tasks, dependencies, and workflow state.",
+      "status_column": "done",
+      "start_date": "2026-08-28",
+      "end_date": "2026-09-01",
+      "duration_days": 5,
+      "board_position": 1,
+      "depends_on": [1]
+    },
+    {
+      "id": 3,
+      "title": "UI/UX Wireframes",
+      "description": "Wireframe the Kanban board, task detail view, and dependency editor.",
+      "status_column": "done",
+      "start_date": "2026-08-28",
+      "end_date": "2026-09-02",
+      "duration_days": 6,
+      "board_position": 2,
+      "depends_on": [1]
+    },
+    {
+      "id": 4,
+      "title": "Backend API Development",
+      "description": "Build REST endpoints for tasks, dependencies, and board state.",
+      "status_column": "done",
+      "start_date": "2026-09-02",
+      "end_date": "2026-09-11",
+      "duration_days": 10,
+      "board_position": 3,
+      "depends_on": [2]
+    },
+    {
+      "id": 5,
+      "title": "Frontend Component Library",
+      "description": "Build the reusable Kanban column, card, and drag-and-drop primitives.",
+      "status_column": "in_progress",
+      "start_date": "2026-09-03",
+      "end_date": "2026-09-16",
+      "duration_days": 9,
+      "board_position": 1,
+      "depends_on": [3]
+    },
+    {
+      "id": 6,
+      "title": "Authentication Service",
+      "description": "Implement login, session handling, and role-based access.",
+      "status_column": "in_progress",
+      "start_date": "2026-09-02",
+      "end_date": "2026-09-12",
+      "duration_days": 11,
+      "board_position": 2,
+      "depends_on": [2]
+    },
+    {
+      "id": 7,
+      "title": "API Documentation",
+      "description": "Document REST endpoints and request/response schemas.",
+      "status_column": "review",
+      "start_date": "2026-09-12",
+      "end_date": "2026-09-15",
+      "duration_days": 4,
+      "board_position": 1,
+      "depends_on": [4]
+    },
+    {
+      "id": 8,
+      "title": "Integration Tests",
+      "description": "End-to-end tests covering auth-protected API workflows.",
+      "status_column": "backlog",
+      "start_date": "2026-09-17",
+      "end_date": "2026-09-21",
+      "duration_days": 5,
+      "board_position": 1,
+      "depends_on": [4, 6]
+    },
+    {
+      "id": 9,
+      "title": "Frontend-Backend Integration",
+      "description": "Wire the Kanban UI to live API endpoints, replacing mock data.",
+      "status_column": "backlog",
+      "start_date": "2026-09-17",
+      "end_date": "2026-09-24",
+      "duration_days": 8,
+      "board_position": 2,
+      "depends_on": [4, 5]
+    },
+    {
+      "id": 10,
+      "title": "Deployment & Release",
+      "description": "Provision hosting, configure CI/CD, and ship v1.0.",
+      "status_column": "backlog",
+      "start_date": "2026-09-25",
+      "end_date": "2026-09-29",
+      "duration_days": 5,
+      "board_position": 3,
+      "depends_on": [8, 9]
+    }
+  ],
+  "test_case_notes": {
+    "convergence_test": "If Task 2's schedule shifts, the delay reaches Task 8 via two paths (2->4->8 and 2->6->8). Task 8 should shift by the same amount as the upstream change once, not double.",
+    "rollback_test": "Move Task 4 (Backend API) from 'done' back to 'in_progress'. Tasks 7, 8, and 9 should all flip to Blocked, since each depends on Task 4.",
+    "cycle_rejection_test": "Attempt to add a dependency (2 depends_on 8). This would create a cycle (2->4->8->2 or 2->6->8->2) and must be rejected."
+  }
+}
